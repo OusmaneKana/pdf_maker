@@ -15,8 +15,6 @@ from pprint import pprint
 import excel_parser
 
 def main(): 
-
-    #DEFAUTL ARGUMENT OF PDF PARSER IS EXCEL THAT I USED, YOU CAN OVERWRITE IT WITH YOUR EXCEL NAME OR CHANGE THE DEFAULT NAME ON excelparser,py
     student_record = excel_parser.parse()
 
 
@@ -38,8 +36,7 @@ def main():
 
                          ])
        
-        if ite ==1:
-            break
+        
         # print(record)
         file_name = create_pdf(student_id, record)
         javascript_added = append_js_to_pdf(file_name,total_aid)
@@ -59,7 +56,7 @@ def create_pdf(student_id, record):
 
 
     template = "1117_template.pdf"
-    file_name = f"pdf_outputs/{record['first_name']} {record['last_name']}.pdf"
+    file_name = f"/Users/umcr/OneDrive - North American University/S.A/FA Pdfs/{record['first_name']} {record['last_name']}.pdf"
     # file_name = "test_output.pdf"
 
 

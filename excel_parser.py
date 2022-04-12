@@ -3,7 +3,7 @@ import pandas as pd
 from pprint import pprint
 
 
-def parse(excel_path="FINA-TOPDF.xlsx"):
+def parse(excel_path="/Users/umcr/OneDrive - North American University/S.A/Fina_scholarships.xlsx"):
 	student_records = pd.read_excel(excel_path)
 
 	
