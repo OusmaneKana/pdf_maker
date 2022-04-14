@@ -5,8 +5,8 @@ import webbrowser
 import os
 
 # account credentials
-username = "sciss@na.edu"
-password = "Lollipop270915"
+username = "solutions@na.edu"
+password = "fs3F}656"
 def clean(text):
     # clean text for creating a folder
     return "".join(c if c.isalnum() else "_" for c in text)
