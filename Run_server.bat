@@ -1,1 +1,2 @@
 python outlook_trigger.py
+pause
