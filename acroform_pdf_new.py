@@ -56,7 +56,9 @@ def create_pdf(student_id, record):
 
 
     template = "1117_template.pdf"
-    file_name = f"C:/Users/umcr/OneDrive - North American University/S.A/FA Pdfs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    # file_name = f"C:/Users/umcr/OneDrive - North American University/S.A/FA Pdfs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    file_name = f"pdf_outputs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+
     # file_name = "test_output.pdf"
 
 

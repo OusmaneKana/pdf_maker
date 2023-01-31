@@ -3,7 +3,22 @@ import pandas as pd
 from pprint import pprint
 
 
-def parse(excel_path="/Users/umcr/OneDrive - North American University/S.A/Fina_scholarships.xlsx"):
+
+def parse_FA_data():
+	pell_grant_amounts = pd.read_excel("bin/transformed_data.xlsx", sheet_name=0)
+
+	efc_dct = {}
+	# print(pell_grant_amounts.head())
+	for column in pell_grant_amounts:
+		efc_dct[pell_grant_amounts[column][0], pell_grant_amounts[column][2]] = pell_grant_amounts[column][3]
+
+		
+
+
+	return efc_dct
+def parse():
+	excel_path="bin/student_records.xlsx"
+	
 	student_records = pd.read_excel(excel_path)
 
 	
@@ -13,33 +28,21 @@ def parse(excel_path="/Users/umcr/OneDrive - North American University/S.A/Fina_
 
 
 		# print(student_efc)
-		if row['ID_NUM'] not in id_grand.keys():
+		if row['Jenzabar ID'] not in id_grand.keys():
 
-			id_grand[row['ID_NUM']] = { "first_name": row['FIRST_NAME'],
-												"last_name": row['LAST_NAME'],
+			id_grand[row['Jenzabar ID']] = { "full_name": row['Name'],
+												
 												"aids": {
-														"Scholarship": [0],
-														"Pell Grant": [0],
-														"Sub_lone": [0],
-														"Unsub_lone": [0]}
+														"efc": row["EFC"],
+														"dependency_status": row["Dependency Status (D/I)"],
+														"loan_amount": row["Loan Amount"],
+														"total_scholarship": row["Total Scholarship"]}
 														}
 
-		if "Scholarship" in row["value"]:
-			id_grand[row['ID_NUM']]["aids"]['Scholarship'].append(row["award_amount"])
-		elif "Pell" in row["value"]:
-			id_grand[row['ID_NUM']]["aids"]['Pell Grant'].append(row["award_amount"])
-		elif "DLSUB" in row["code"]:
-			id_grand[row['ID_NUM']]["aids"]['Sub_lone'].append(row["award_amount"])
-		elif "DLUNSUB" in row["code"]:
-			id_grand[row['ID_NUM']]["aids"]['Unsub_lone'].append(row["award_amount"])
-
-
-
-	
 	return id_grand	
 
 
 if __name__ == '__main__':
-	parse()
+	parse_FA_data()
 
 
