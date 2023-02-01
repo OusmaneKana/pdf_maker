@@ -17,7 +17,7 @@ def parse_FA_data():
 
 	return efc_dct
 def parse():
-	excel_path="bin/student_records.xlsx"
+	excel_path="bin/student_records_pr.xlsx"
 	
 	student_records = pd.read_excel(excel_path)
 
@@ -35,7 +35,8 @@ def parse():
 												"aids": {
 														"efc": row["EFC"],
 														"dependency_status": row["Dependency Status (D/I)"],
-														"loan_amount": row["Loan Amount"],
+														"sub_loan": row["Sub Loan"],
+														"unsub_loan": row["Unsub Loan"],
 														"total_scholarship": row["Total Scholarship"]}
 														}
 

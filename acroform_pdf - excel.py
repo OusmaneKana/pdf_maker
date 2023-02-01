@@ -49,24 +49,18 @@ def main():
 
     for student_id, record in student_record.items():
 
-        total_scholarship = 0 if math.isnan(record['aids']['total_scholarship']) else record['aids']['total_scholarship']
-        pell_grant = 0 if math.isnan(record['aids']['pell_grant']) else record['aids']['pell_grant']
+        total_scholarship = 0 if math.isnan(record['aids']['total_scholarship']) else int(record['aids']['total_scholarship'])
+        pell_grant = 0 if math.isnan(record['aids']['pell_grant']) else int(record['aids']['pell_grant'])
 
-        loan_amount = 0 if math.isnan(record['aids']['loan_amount']) else record['aids']['loan_amount']
-
-
-
-        if int(record['aids']['pell_grant'])//2 > 1:
-
-            pell_grant = (pell_grant//2)+1
-        else:
-            pell_grant = pell_grant//2
+        sub_loan = 0 if math.isnan(record['aids']['sub_loan']) else int(record['aids']['sub_loan'])
+        unsub_loan = 0 if math.isnan(record['aids']['unsub_loan']) else int(record['aids']['unsub_loan'])
 
 
-        total_aid = sum([total_scholarship/2,
+        total_aid = sum([total_scholarship//2,
                          pell_grant,
-                        loan_amount//2,
-                
+                        sub_loan//2,
+                        unsub_loan//2,
+
 
                          ])
        
@@ -75,7 +69,7 @@ def main():
         file_name = create_pdf(student_id, record)
         javascript_added = append_js_to_pdf(file_name,total_aid)
         ite+=1
-        return
+       
 
 
 def make_js_action(js):
@@ -88,40 +82,44 @@ def create_pdf(student_id, record):
 
 
     template = "1117_template.pdf"
-    # file_name = f"C:/Users/umcr/OneDrive - North American University/S.A/FA Pdfs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
-    file_name = f"pdf_outputs/{record['full_name'].strip()}.pdf"
+    file_name = f"C:/Users/umcr/OneDrive - North American University/S.A/FA Pdfs/Fall 2023/{record['full_name'].strip()}.pdf"
+    # file_name = f"pdf_outputs/{record['full_name'].strip()}.pdf"
 
     # file_name = "test_output.pdf"
 
-    total_scholarship = 0 if math.isnan(record['aids']['total_scholarship']) else record['aids']['total_scholarship']
-    pell_grant = 0 if math.isnan(record['aids']['pell_grant']) else record['aids']['pell_grant']
+    total_scholarship = 0 if math.isnan(record['aids']['total_scholarship']) else int(record['aids']['total_scholarship'])
+    pell_grant = 0 if math.isnan(record['aids']['pell_grant']) else int(record['aids']['pell_grant'])
 
-    loan_amount = 0 if math.isnan(record['aids']['loan_amount']) else record['aids']['loan_amount']
+    sub_loan = 0 if math.isnan(record['aids']['sub_loan']) else int(record['aids']['sub_loan'])
+    unsub_loan = 0 if math.isnan(record['aids']['unsub_loan']) else int(record['aids']['unsub_loan'])
 
 
+    
 
 
 
     packet = io.BytesIO()
-    c = canvas.Canvas(packet)
+    c = canvas.Canvas(packet,pagesize=landscape(letter))
 
     c.drawString(110, 507, record['full_name'])
 
     c.drawString(110, 491, str(int(student_id)))
+
+
+
     
     c.drawString(600, 387, "${:,}".format(total_scholarship//2)) #Divided by 2 because input price is yearly
 
 
     if pell_grant//2 > 1:
-        c.drawString(600, 353, "${:,}".format((pell_grant//2)+1)) 
+        c.drawString(600, 353, "${:,}".format((pell_grant)+1)) 
     else:
-        c.drawString(600, 353, "${:,}".format(pell_grant//2)) 
+        c.drawString(600, 353, "${:,}".format(pell_grant)) 
 
    
-    c.drawString(600, 321, "${:,}".format(loan_amount//2))  #Divided by 2 because input price is yearly
+    c.drawString(600, 321, "${:,}".format(sub_loan//2))  #Divided by 2 because input price is yearly
 
-   
-    c.drawString(600, 289, "${:,}".format(loan_amount//2))  #Divided by 2 because input price is yearly
+    c.drawString(600, 289, "${:,}".format(unsub_loan//2))  #Divided by 2 because input price is yearly
 
 
     c.save()
