@@ -27,21 +27,20 @@ def main():
 
 
     for student_id, data in student_record.items():
-        efc = student_record[student_id]['aids']['efc']
+        efc = -1 if math.isnan(student_record[student_id]['aids']['efc']) else int(student_record[student_id]['aids']['efc'])
+        # print(efc)
 
         for key, value in FA_data.items(): # From the FA_data dictionary match the record with the efc to get the Pell Grant amount.
             
             try:
+                print(f" Is {efc} between {key[0]} to {key[1]} ?")
                 if key[0]<=efc<=key[1]:
                     
                     student_record[student_id]['aids']['pell_grant'] = value
                     break
-                else:
-                    
-                    student_record[student_id]['aids']['pell_grant'] = 0
-                    break
+
             except Exception as e:
-                
+                print(f"Failed to find EFC because {e}")
                 student_record[student_id]['aids']['pell_grant'] = 0
                  # break
 
@@ -94,7 +93,8 @@ def create_pdf(student_id, record):
     unsub_loan = 0 if math.isnan(record['aids']['unsub_loan']) else int(record['aids']['unsub_loan'])
 
 
-    
+    print("*"*10)
+    print(f"{record['full_name']}", total_scholarship,pell_grant, sub_loan, unsub_loan)
 
 
 
