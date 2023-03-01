@@ -3,19 +3,21 @@ from reportlab.lib.colors import magenta, pink, blue, green, red, black
 from reportlab.lib.pagesizes import letter, landscape
 from pdfrw.objects.pdfdict import PdfDict
 from pdfrw.objects.pdfname import PdfName
-from pdfrw import PdfReader, PdfWriter
 from pdfrw.objects.pdfstring import PdfString
 from pdfrw.objects.pdfdict import PdfDict
 from pdfrw.objects.pdfarray import PdfArray
-from PyPDF2 import PdfFileWriter, PdfFileReader
+from pypdf import PdfWriter, PdfReader
+import pdfrw
 from reportlab.lib.units import mm, inch
 import datetime, sys, io
 import pandas as pd
 from pprint import pprint
 import excel_parser
+import jz_conn
 
 def main(): 
-    student_record = excel_parser.parse()
+    # student_record = excel_parser.parse()
+    student_record = jz_conn.get_records()
 
 
     # print(type(student_record))
@@ -56,15 +58,15 @@ def create_pdf(student_id, record):
 
 
     template = "1117_template.pdf"
-    # file_name = f"C:/Users/umcr/OneDrive - North American University/S.A/FA Pdfs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
-    file_name = f"pdf_outputs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    file_name = f"C:/Users/umcr/OneDrive - North American University/S.A/FA Pdfs/Fall 2023/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    # file_name = f"pdf_outputs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
 
     # file_name = "test_output.pdf"
 
 
 
     packet = io.BytesIO()
-    c = canvas.Canvas(packet)
+    c = canvas.Canvas(packet, pagesize=landscape(letter))
 
     c.drawString(110, 507, record['last_name']+ "," +record['first_name'])
 
@@ -91,14 +93,14 @@ def create_pdf(student_id, record):
     packet.seek(0)
 
     # create a new PDF with Reportlab
-    new_pdf = PdfFileReader(packet)
+    new_pdf = PdfReader(packet)
     # read your existing PDF
-    existing_pdf = PdfFileReader(open(template, "rb"))
-    output = PdfFileWriter()
+    existing_pdf = PdfReader(open(template, "rb"))
+    output = PdfWriter()
     # add the "watermark" (which is the new pdf) on the existing page
-    page = existing_pdf.getPage(0)
-    page.mergePage(new_pdf.getPage(0))
-    output.addPage(page)
+    page = existing_pdf.pages[0]
+    page.merge_page(new_pdf.pages[0])
+    output.add_page(page)
     # finally, write "output" to a real file
     outputStream = open(file_name, "wb")
     output.write(outputStream)
@@ -109,8 +111,8 @@ def create_pdf(student_id, record):
 
 def append_js_to_pdf(file_name, total_aid = 0):
 
-    pdf_writer = PdfWriter()
-    pdf_reader = PdfReader(file_name)
+    pdf_writer = pdfrw.PdfWriter()
+    pdf_reader = pdfrw.PdfReader(file_name)
     try:
       js = open("calculator.js").read().replace("total_aid_here",str(total_aid))
     except Exception as e:
