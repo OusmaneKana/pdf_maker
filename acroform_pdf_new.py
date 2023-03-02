@@ -12,8 +12,12 @@ from reportlab.lib.units import mm, inch
 import datetime, sys, io
 import pandas as pd
 from pprint import pprint
-import excel_parser
+
 import jz_conn
+
+
+
+
 
 def main(): 
     # student_record = excel_parser.parse()

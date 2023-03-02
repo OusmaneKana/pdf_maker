@@ -3,11 +3,14 @@ import pymysql.cursors
 import pymssql
 import pandas
 from pprint import pprint
+from dotenv import dotenv_values
+
+CONFIG = dotenv_values(".env")
 
 
 def get_records():
-    conn = pymssql.connect(server='JZNAT-SQL1', user='NA\\japi',
-                           password='Japi@2022!!', database='J1PRD')
+    conn = pymssql.connect(server=CONFIG['server'], user=CONFIG['user'],
+                           password=CONFIG['password'], database=CONFIG['database'])
     cursor = conn.cursor()
 
     records = cursor.execute("""
