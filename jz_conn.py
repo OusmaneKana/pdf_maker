@@ -25,7 +25,7 @@ def get_records():
                 inner join  [JZNAT-SQL1].[J1PRD].[dbo].[NAME_AND_ADDRESS] nms on nms.ID_NUM = bm.ID_NUM
                 inner join [JZNAT-SQL1].[J1FALIVE].[ngp].verify_isir ni on ni.constituent_id = p.id
                 inner join [JZNAT-SQL1].[J1FALIVE].[ngp].isir_ver_status_type nt on nt.id = ni.isir_ver_status_type_id
-                where ap.award_year_id = 9 and ni.award_year_type_id = 9
+                where ap.award_year_id >= 9 and ni.award_year_type_id >= 9
                 order by ap.created_on asc
                 """)
 

@@ -28,6 +28,8 @@ def main():
     ite = 0
     for student_id, record in student_record.items():
 
+        # if ite ==1:break
+
         if sum(record['aids']['Pell Grant'])//2 > 1:
 
             pell_grant = (sum(record['aids']['Pell Grant'])//2 )+1
@@ -44,7 +46,7 @@ def main():
        
         
         # print(record)
-        file_name = create_pdf(student_id, record)
+        file_name = create_pdf(record)
         javascript_added = append_js_to_pdf(file_name,total_aid)
         ite+=1
 
@@ -55,14 +57,15 @@ def make_js_action(js):
     action.JS = js
     return action
 
-def create_pdf(student_id, record): 
+def create_pdf(record): 
 
     # pprint(record)
 
 
 
     template = "1117_template.pdf"
-    file_name = f"C:/Users/umcr/OneDrive - North American University/S.A/FA Pdfs/Fall 2023/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    file_name = f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    
     # file_name = f"pdf_outputs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
 
     # file_name = "test_output.pdf"
@@ -74,7 +77,7 @@ def create_pdf(student_id, record):
 
     c.drawString(110, 507, record['last_name']+ "," +record['first_name'])
 
-    c.drawString(110, 491, str(student_id))
+    c.drawString(110, 491, str(record['actual_id']))
     
     c.drawString(600, 387, "${:,}".format(sum(record['aids']['Scholarship'])//2)) #Divided by 2 because input price is yearly
 
