@@ -32,7 +32,7 @@ def main():
 
         if sum(record['aids']['Pell Grant'])//2 > 1:
 
-            pell_grant = (sum(record['aids']['Pell Grant'])//2 )+1
+            pell_grant = (sum(record['aids']['Pell Grant'])//2)+1
         else:
             pell_grant = sum(record['aids']['Pell Grant'])//2
 
@@ -79,18 +79,18 @@ def create_pdf(record):
 
     c.drawString(110, 491, str(record['actual_id']))
     
-    c.drawString(600, 387, "${:,}".format(sum(record['aids']['Scholarship'])//2)) #Divided by 2 because input price is yearly
+    c.drawString(600, 387, "${:,}".format(int(sum(record['aids']['Scholarship'])//2))) #Divided by 2 because input price is yearly
 
     if sum(record['aids']['Pell Grant'])//2 > 1:
-        c.drawString(600, 353, "${:,}".format((sum(record['aids']['Pell Grant'])//2)+1)) 
+        c.drawString(600, 353, "${:,}".format(int((sum(record['aids']['Pell Grant'])//2)+1))) 
     else:
-        c.drawString(600, 353, "${:,}".format(sum(record['aids']['Pell Grant'])//2)) 
+        c.drawString(600, 353, "${:,}".format(int(sum(record['aids']['Pell Grant'])//2)))
 
    
-    c.drawString(600, 321, "${:,}".format(sum(record['aids']['Sub_lone'])//2))  #Divided by 2 because input price is yearly
+    c.drawString(600, 321, "${:,}".format(int(sum(record['aids']['Sub_lone'])//2)))  #Divided by 2 because input price is yearly
 
    
-    c.drawString(600, 289, "${:,}".format(sum(record['aids']['Unsub_lone'])//2))  #Divided by 2 because input price is yearly
+    c.drawString(600, 289, "${:,}".format(int(sum(record['aids']['Unsub_lone'])//2)))  #Divided by 2 because input price is yearly
 
 
     c.save()
