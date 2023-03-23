@@ -14,19 +14,19 @@ def get_records():
     cursor = conn.cursor()
 
     records = cursor.execute("""
-                select  bm.ssn,bm.ID_NUM, nm.FIRST_NAME, nm.LAST_NAME, ap.award_year_id, ap.award_amount, att.code, att.value, nms.EMAIL_ADDRESS, convert(date, bm.BIRTH_DTE) as 'BIRTH_DTE'
-                from[JZNAT-SQL1].[J1FALIVE].[ngp].student_award_package ap
-                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].[award_type] att on att.id = ap.award_type_id
-                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].financial_aid_year fy on fy.id = ap.financial_aid_year_id
-                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].person p on p.id = ap.constituent_id
-                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].award_status_type awstp on awstp.id = att.award_status_type_id
-                inner join [JZNAT-SQL1].[J1PRD].[dbo].[BIOGRAPH_MASTER] bm on p.social_security_number = bm.SSN
-                inner join  [JZNAT-SQL1].[J1PRD].[dbo].[NAME_MASTER] nm on nm.ID_NUM = bm.ID_NUM
-                inner join  [JZNAT-SQL1].[J1PRD].[dbo].[NAME_AND_ADDRESS] nms on nms.ID_NUM = bm.ID_NUM
-                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].verify_isir ni on ni.constituent_id = p.id
-                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].isir_ver_status_type nt on nt.id = ni.isir_ver_status_type_id
-                where ap.award_year_id >= 9 and ni.award_year_type_id >= 9
-                order by ap.created_on asc
+                select  bm.ssn,bm.ID_NUM, nm.FIRST_NAME, nm.LAST_NAME, ap.award_year_id, ap.award_amount, att.code, att.value, nms.EMAIL_ADDRESS, convert(date, bm.BIRTH_DTE) as 'BIRTH_DTE'
+                from[JZNAT-SQL1].[J1FALIVE].[ngp].student_award_package ap
+                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].[award_type] att on att.id = ap.award_type_id
+                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].financial_aid_year fy on fy.id = ap.financial_aid_year_id
+                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].person p on p.id = ap.constituent_id
+                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].award_status_type awstp on awstp.id = att.award_status_type_id
+                inner join [JZNAT-SQL1].[J1PRD].[dbo].[BIOGRAPH_MASTER] bm on p.social_security_number = bm.SSN
+                inner join  [JZNAT-SQL1].[J1PRD].[dbo].[NAME_MASTER] nm on nm.ID_NUM = bm.ID_NUM
+                inner join  [JZNAT-SQL1].[J1PRD].[dbo].[NAME_AND_ADDRESS] nms on nms.ID_NUM = bm.ID_NUM
+                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].verify_isir ni on ni.constituent_id = p.id
+                inner join [JZNAT-SQL1].[J1FALIVE].[ngp].isir_ver_status_type nt on nt.id = ni.isir_ver_status_type_id
+                where ap.award_year_id = 10 and ni.award_year_type_id >= 10
+                order by ap.created_on asc
                 """)
 
 
