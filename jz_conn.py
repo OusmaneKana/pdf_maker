@@ -4,6 +4,7 @@ import pymssql
 import pandas
 from pprint import pprint
 from dotenv import dotenv_values
+import json
 
 CONFIG = dotenv_values(b"C:\Users\umcr\Desktop\projects\pdf_maker\.env")
 
@@ -51,7 +52,11 @@ def get_records():
 
     # print(records_df.head())
 
-    records_df["SSN"] = records_df["SSN"].apply(lambda x: str(x)[5:])
+    # records_df.to_csv("dumps.csv")
+
+    # records_df["SSN"] = records_df["SSN"].apply(lambda x: str(x)[-5:])
+
+    
     id_grand = {}
 
     for i, row in records_df.iterrows():
@@ -93,4 +98,9 @@ def get_records():
 
 
 if __name__ == "__main__":
-    pprint(get_records())
+    
+    records = get_records()
+
+    print(len(records))
+
+
