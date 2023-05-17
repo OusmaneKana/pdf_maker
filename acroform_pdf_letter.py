@@ -12,7 +12,7 @@ from reportlab.lib.units import mm, inch
 import datetime, sys, io
 import pandas as pd
 from pprint import pprint
-
+from string import Template
 import jz_conn
 
 
@@ -28,7 +28,7 @@ def main():
     ite = 0
     for student_id, record in student_record.items():
 
-        # if ite ==1:break
+        if ite ==1:break
 
         if sum(record['aids']['Pell Grant'])//2 > 1:
 
@@ -63,7 +63,7 @@ def create_pdf(record):
 
 
 
-    template = "1117_template.pdf"
+    template = "letter_template.pdf"
     # file_name = f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
     
     file_name = f"pdf_outputs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
