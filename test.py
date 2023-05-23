@@ -18,7 +18,7 @@ import jz_conn
 
 
 def main():
-    append_js_to_pdf("letter_template_test.pdf")
+    append_js_to_pdf("template.pdf")
 def append_js_to_pdf(file_name, total_aid = 0):
 
     pdf_writer = pdfrw.PdfWriter()
@@ -42,6 +42,7 @@ def append_js_to_pdf(file_name, total_aid = 0):
         page = page_index
         page.Type = PdfName.Page
         for field in page.Annots:
+            print(field)
             try:
                 if field['/T'].replace(")", "").replace("(","") in ["tuitionAndFee","athleticsFee","ownResources", "housingFee", "mealPlan"] :
                     field.update(PdfDict(AA=PdfDict(Bl=make_js_action(js))))
@@ -50,7 +51,10 @@ def append_js_to_pdf(file_name, total_aid = 0):
         page.AA = PdfDict()
         page.AA.O = make_js_action(js)
         pdf_writer.addpage(page)  
-    pdf_writer.write(file_name)
+    
+
+    new_file_name = "iteration_"+file_name
+    pdf_writer.write(new_file_name)
 
 
 def make_js_action(js):
