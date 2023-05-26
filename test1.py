@@ -1,4 +1,11 @@
-import qrcode
-img = qrcode.make('https://nau3203-my.sharepoint.com/:b:/g/personal/umcr_na_edu/EdEHsxFVtm5HpjphrQnah9MBybazbwa1zCI6tUmENwqBEw?download=1')
-type(img)  # qrcode.image.pil.PilImage
-img.save("some_file.png")
+from PyPDF2 import PdfWriter, PdfReader
+
+output = PdfWriter()
+ipdf = PdfReader(open('template.pdf', 'rb'))
+
+page = ipdf.pages[0]
+output.add_page(page)
+
+with open('new.pdf', 'wb') as f:
+    output.add_js('this.getField("student_name1").value = "$first_name"')
+    output.write(f)
