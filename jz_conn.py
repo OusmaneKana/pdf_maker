@@ -15,7 +15,7 @@ def get_records():
     cursor = conn.cursor()
 
     records = cursor.execute("""
-                select  bm.ssn,bm.ID_NUM, nm.FIRST_NAME, nm.LAST_NAME, ap.award_year_id, ap.award_amount, att.code, att.value, nms.EMAIL_ADDRESS, convert(date, bm.BIRTH_DTE) as 'BIRTH_DTE'
+                select  bm.ssn,bm.ID_NUM, nm.FIRST_NAME, nm.LAST_NAME, ap.award_year_id, ap.award_amount, att.code, att.value, nms.EMAIL_ADDRESS, convert(date, bm.BIRTH_DTE) as 'BIRTH_DTE', nms.ADDR_LINE_1, nms.ADDR_STS, nms.CITY, nms.[STATE], nms.ZIP
                 from[JZNAT-SQL1].[J1FALIVE].[ngp].student_award_package ap
                 inner join [JZNAT-SQL1].[J1FALIVE].[ngp].[award_type] att on att.id = ap.award_type_id
                 inner join [JZNAT-SQL1].[J1FALIVE].[ngp].financial_aid_year fy on fy.id = ap.financial_aid_year_id
@@ -44,7 +44,12 @@ def get_records():
         "Code",
         "Value",
         "Email",
-        "Birthday"
+        "Birthday",
+        "Address_Line_1",
+        "Address_street",
+        "Address_City", 
+        "Address_State",
+        "Address_Zip"
       
         ]
     
@@ -61,6 +66,11 @@ def get_records():
                                     "first_name": row['First Name'],
                                     "birthdate": row["Birthday"],
                                     "last_name": row['Last Name'],
+                                    "Address_Line_1": row['Address_Line_1'],
+                                    "Address_street": row['Address_street'],
+                                    "Address_City": row['Address_City'], 
+                                    "Address_State": row['Address_State'],
+                                    "Address_Zip": row['Address_Zip'],
                                      "aids": {
                                                 "Scholarship": [0],
                                                 "Pell Grant": [0],

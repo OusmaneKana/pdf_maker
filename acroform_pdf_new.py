@@ -66,7 +66,9 @@ def main():
         file_name = create_pdf(record)
         javascript_added = append_js_to_pdf(file_name,total_aid)
 
-        createOfferLetter(record)
+        final_output_file = createOfferLetter(record)
+
+        # add_image_to_pdf(final_output_file)
 
         ite+=1
 
@@ -84,9 +86,9 @@ def create_pdf(record):
 
 
     template = "1117_template.pdf"
-    file_name = f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    # file_name = f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
     
-    # file_name = f"pdf_outputs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    file_name = f"pdf_outputs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
 
     # file_name = "test_output.pdf"
 
@@ -173,17 +175,18 @@ def createOfferLetter(record):
         *
     """
 
-    shippping_info = {"student_name":"Serigne Ciss",
-                    "street_address":" 2525 City WestBld",
-                        "city_zip":"Hosuton 77477" }
+    shippping_info = {"student_name":record['first_name'] +" " +record['last_name'],
+                    "street_address":f"{record['Address_Line_1']}",
+                        "city_zip":f"{record['Address_City']} {record['Address_State']} {record['Address_Zip']}"}
 
 
 
     financial_aid  = {
-            "institutionalScholarship": record['aids']['Scholarship'],
-            "pellGrant": record['aids']['Pell Grant'],
-            "directSubLoan": record['aids']['Sub_Loan'],
-            "directUnsubLoan": record['aids']['Unsub_Loan']}
+            "institutionalScholarship": int(sum(record['aids']['Scholarship'])),
+            "pellGrant": int(sum(record['aids']['Pell Grant'])),
+            "directSubLoan": int(sum(record['aids']['Sub_lone'])),
+
+            "directUnsubLoan": int(sum(record['aids']['Unsub_lone']))}
 
 
     direct_cost_dct= {
@@ -192,8 +195,8 @@ def createOfferLetter(record):
             "mealPlanFee": 1440,
             "athleticsFee": 900}
 
-    total_direct_cost = sum([val for key,val in direct_cost_dct.items()])
-    total_aid = sum([val for key,val in financial_aid.items()])
+    total_direct_cost = int(sum([val for key,val in direct_cost_dct.items()]))
+    total_aid = int(sum([val for key,val in financial_aid.items()]))
 
 
 
@@ -228,72 +231,13 @@ def createOfferLetter(record):
             },
     )
 
-    # write "output" to PyPDF2-output.pdf
-    with open(f"pdf_outputs/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf", "wb") as output_stream:
+    final_output_file = f"pdf_outputs/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    with open(final_output_file, "wb") as output_stream:
         writer.write(output_stream)
-
-
-    def generate_qr():
-        
-        # Data to encode
-        data = "https://fs.na.edu"
-        
-        # Creating an instance of QRCode class
-        qr = qrcode.QRCode(version = 1,
-                        box_size = 10,
-                        border = 5)
-        
-        # Adding data to the instance 'qr'
-        qr.add_data(data)
-        
-        qr.make(fit = True)
-        img = qr.make_image(fill_color = 'black',
-                            back_color = 'white')
-        
-        img.save('qr_code.png')
-
-    def add_image():
     
-    
-        in_pdf_file = 'filled-out1.pdf'
-        out_pdf_file = 'filled-out1.pdf'
-        img_file = 'qr_code.png'
-    
-        packet = io.BytesIO()
-        can = canvas.Canvas(packet, pagesize=landscape(letter))
-        #can.drawString(10, 100, "Hello world")
-        x_start = 630
-        y_start = -120
-        can.drawImage(img_file, x_start, y_start, width=120, preserveAspectRatio=True, mask='auto')
-        can.showPage()
-        can.showPage()
-        can.showPage()
-        can.save()
-    
-        #move to the beginning of the StringIO buffer
-        packet.seek(0)
-    
-        new_pdf = PdfReader(packet)
-    
-        # read the existing PDF
-        existing_pdf = PdfReader(open(in_pdf_file, "rb"))
-        output = PdfWriter()
-
-        output.add_page(existing_pdf.pages[0])
-
-        #create page with QR
-        page = existing_pdf.pages[1]
-        page.merge_page(new_pdf.pages[0])
-        output.add_page(page)
-
-    
-        outputStream = open(out_pdf_file, "wb")
-        output.write(outputStream)
-        outputStream.close()
+    return final_output_file
 
 
-    generate_qr()
-    add_image()
 
 
 def append_js_to_pdf(file_name, total_aid = 0):
@@ -320,6 +264,65 @@ def append_js_to_pdf(file_name, total_aid = 0):
         page.AA.O = make_js_action(js)
         pdf_writer.addpage(page)  
     pdf_writer.write(file_name)
+
+
+def generate_qr():
+    
+    # Data to encode
+    data = "https://fs.na.edu"
+    
+    # Creating an instance of QRCode class
+    qr = qrcode.QRCode(version = 1,
+                    box_size = 10,
+                    border = 5)
+    
+    # Adding data to the instance 'qr'
+    qr.add_data(data)
+    
+    qr.make(fit = True)
+    img = qr.make_image(fill_color = 'black',
+                        back_color = 'white')
+    
+    img.save('qr_code.png')
+
+def add_image_to_pdf(in_pdf_file):
+
+    out_pdf_file = in_pdf_file
+    img_file = 'qr_code.png'
+
+    packet = io.BytesIO()
+    can = canvas.Canvas(packet, pagesize=landscape(letter))
+    #can.drawString(10, 100, "Hello world")
+    x_start = 630
+    y_start = -120
+    can.drawImage(img_file, x_start, y_start, width=120, preserveAspectRatio=True, mask='auto')
+    can.showPage()
+    can.showPage()
+    can.showPage()
+    can.save()
+
+    #move to the beginning of the StringIO buffer
+    packet.seek(0)
+
+    new_pdf = PdfReader(packet)
+
+    # read the existing PDF
+    existing_pdf = PdfReader(open(in_pdf_file, "rb"))
+    output = PdfWriter()
+
+    output.add_page(existing_pdf.pages[0])
+
+    #create page with QR
+    page = existing_pdf.pages[1]
+    page.merge_page(new_pdf.pages[0])
+    output.add_page(page)
+
+
+    outputStream = open(out_pdf_file, "wb")
+    output.write(outputStream)
+    outputStream.close()
+
+
 
 if __name__ == "__main__":
     main() 
