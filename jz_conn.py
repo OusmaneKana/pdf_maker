@@ -47,15 +47,7 @@ def get_records():
         "Birthday"
       
         ]
-    # new_header = records_df.iloc[0]
-    # records_df = records_df[1:]
-
-    # print(records_df.head())
-
-    # records_df.to_csv("dumps.csv")
-
-    # records_df["SSN"] = records_df["SSN"].apply(lambda x: str(x)[-5:])
-
+    
     
     id_grand = {}
 
