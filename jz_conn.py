@@ -6,7 +6,7 @@ from pprint import pprint
 from dotenv import dotenv_values
 import json
 
-CONFIG = dotenv_values(b"C:\Users\umcr\Desktop\projects\pdf_maker\.env")
+CONFIG = dotenv_values(b".env")
 
 
 def get_records():

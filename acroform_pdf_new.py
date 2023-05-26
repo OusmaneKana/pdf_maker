@@ -45,7 +45,7 @@ def main():
     ite = 0
     for student_id, record in student_record.items():
 
-        # if ite ==1:break
+        if ite ==2:break
 
         if sum(record['aids']['Pell Grant'])//2 > 1:
 
@@ -65,6 +65,9 @@ def main():
         # print(record)
         file_name = create_pdf(record)
         javascript_added = append_js_to_pdf(file_name,total_aid)
+
+        createOfferLetter(record)
+
         ite+=1
 
 
@@ -226,7 +229,7 @@ def createOfferLetter(record):
     )
 
     # write "output" to PyPDF2-output.pdf
-    with open("filled-out1.pdf", "wb") as output_stream:
+    with open(f"pdf_outputs/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf", "wb") as output_stream:
         writer.write(output_stream)
 
 
