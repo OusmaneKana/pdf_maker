@@ -27,7 +27,7 @@ def main():
     ite = 0
     for student_id, record in student_record.items():
 
-        # if ite ==2:break
+        if ite ==2:break
 
         if sum(record['aids']['Pell Grant'])//2 > 1:
 
@@ -187,7 +187,7 @@ def createOfferLetter(record):
                             "address_street":shippping_info["street_address"],
                             "address_city_zip":shippping_info["city_zip"],
             
-                            "student_name1": shippping_info["student_name"],
+                            "student_name1": shippping_info["student_name"]+",",
                         "phrase_acceptance": "Congratulation on your acceptance at North American University for the Fall Semester 2023"}
     )
 
