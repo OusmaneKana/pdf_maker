@@ -3,29 +3,11 @@ from reportlab.lib.colors import magenta, pink, blue, green, red, black
 from reportlab.lib.pagesizes import letter, landscape
 from pdfrw.objects.pdfdict import PdfDict
 from pdfrw.objects.pdfname import PdfName
-from pdfrw.objects.pdfstring import PdfString
 from pdfrw.objects.pdfdict import PdfDict
-from pdfrw.objects.pdfarray import PdfArray
 from pypdf import PdfWriter, PdfReader
 import pdfrw
-from reportlab.lib.units import mm, inch
-import datetime, sys, io
-import pandas as pd
-from pprint import pprint
-
-from pypdf import PdfReader, PdfWriter
-import qrcode
-import os, io
-from fpdf import FPDF
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter, landscape
-
-from pypdf import PdfReader, PdfWriter
-import qrcode
-import os, io
-from fpdf import FPDF
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter, landscape
+ 
+import io
 
 
 
@@ -45,7 +27,7 @@ def main():
     ite = 0
     for student_id, record in student_record.items():
 
-        if ite ==2:break
+        # if ite ==2:break
 
         if sum(record['aids']['Pell Grant'])//2 > 1:
 
@@ -66,7 +48,7 @@ def main():
         file_name = create_pdf(record)
         javascript_added = append_js_to_pdf(file_name,total_aid)
 
-        final_output_file = createOfferLetter(record)
+        createOfferLetter(record)
 
         # add_image_to_pdf(final_output_file)
 
@@ -84,12 +66,10 @@ def create_pdf(record):
 
     # pprint(record)
 
-
-
     template = "1117_template.pdf"
-    # file_name = f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    file_name = f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
     
-    file_name = f"pdf_outputs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    # file_name = f"pdf_outputs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
 
     # file_name = "test_output.pdf"
 
@@ -232,11 +212,14 @@ def createOfferLetter(record):
             },
     )
 
-    final_output_file = f"pdf_outputs/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    # final_output_file = f"pdf_outputs/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    final_output_file =f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023//Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+
+
     with open(final_output_file, "wb") as output_stream:
         writer.write(output_stream)
     
-    return final_output_file
+   
 
 
 
@@ -265,26 +248,6 @@ def append_js_to_pdf(file_name, total_aid = 0):
         page.AA.O = make_js_action(js)
         pdf_writer.addpage(page)  
     pdf_writer.write(file_name)
-
-
-def generate_qr():
-    
-    # Data to encode
-    data = "https://fs.na.edu"
-    
-    # Creating an instance of QRCode class
-    qr = qrcode.QRCode(version = 1,
-                    box_size = 10,
-                    border = 5)
-    
-    # Adding data to the instance 'qr'
-    qr.add_data(data)
-    
-    qr.make(fit = True)
-    img = qr.make_image(fill_color = 'black',
-                        back_color = 'white')
-    
-    img.save('qr_code.png')
 
 def add_image_to_pdf(in_pdf_file):
 
