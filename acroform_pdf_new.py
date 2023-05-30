@@ -163,11 +163,11 @@ def createOfferLetter(record):
 
 
     financial_aid  = {
-            "institutionalScholarship": int(sum(record['aids']['Scholarship'])),
-            "pellGrant": int(sum(record['aids']['Pell Grant'])),
-            "directSubLoan": int(sum(record['aids']['Sub_lone'])),
+            "institutionalScholarship": int(sum(record['aids']['Scholarship']))//2,
+            "pellGrant": int(sum(record['aids']['Pell Grant']))//2,
+            "directSubLoan": int(sum(record['aids']['Sub_lone']))//2,
 
-            "directUnsubLoan": int(sum(record['aids']['Unsub_lone']))}
+            "directUnsubLoan": int(sum(record['aids']['Unsub_lone']))//2}
 
 
     direct_cost_dct= {
@@ -188,7 +188,7 @@ def createOfferLetter(record):
                             "address_city_zip":shippping_info["city_zip"],
             
                             "student_name1": shippping_info["student_name"],
-                        "phrase_acceptance": "Congratulation on your acceptance for our Bachelors of Science in Computer Science for the Fall Semester 2023"}
+                        "phrase_acceptance": "Congratulation on your acceptance at North American University for the Fall Semester 2023"}
     )
 
 
