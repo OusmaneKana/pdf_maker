@@ -171,7 +171,7 @@ def createOfferLetter(record):
 
 
     direct_cost_dct= {
-            "tuitionAndFee": 6540,
+            "tuitionAndFee": 6443,
             "housingFee": 1800,
             "mealPlanFee": 1440,
             "athleticsFee": 900}
@@ -212,8 +212,8 @@ def createOfferLetter(record):
             },
     )
 
-    # final_output_file = f"pdf_outputs/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
-    final_output_file =f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023//Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    final_output_file = f"pdf_outputs/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    # final_output_file =f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023//Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
 
 
     with open(final_output_file, "wb") as output_stream:
