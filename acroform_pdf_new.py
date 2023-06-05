@@ -27,7 +27,7 @@ def main():
     ite = 0
     for student_id, record in student_record.items():
 
-        if ite ==2:break
+        # if ite ==2:break
 
         if sum(record['aids']['Pell Grant'])//2 > 1:
 
@@ -121,6 +121,8 @@ def create_pdf(record):
 
 
 def createOfferLetter(record):
+
+    print("...... Creating Offer Letters ......")
     
     reader = PdfReader("template.pdf")
     writer = PdfWriter()
@@ -164,7 +166,7 @@ def createOfferLetter(record):
 
     financial_aid  = {
             "institutionalScholarship": int(sum(record['aids']['Scholarship']))//2,
-            "pellGrant": int(sum(record['aids']['Pell Grant']))//2,
+            "pellGrant": int(sum(record['aids']['Pell Grant']))//2+1 if int(sum(record['aids']['Pell Grant']))//2 >1 else int(sum(record['aids']['Pell Grant']))//2,
             "directSubLoan": int(sum(record['aids']['Sub_lone']))//2,
 
             "directUnsubLoan": int(sum(record['aids']['Unsub_lone']))//2}
@@ -212,8 +214,8 @@ def createOfferLetter(record):
             },
     )
 
-    final_output_file = f"pdf_outputs/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
-    # final_output_file =f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023//Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    # final_output_file = f"pdf_outputs/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    final_output_file =f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023//Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
 
 
     with open(final_output_file, "wb") as output_stream:
