@@ -67,7 +67,7 @@ def create_pdf(record):
     # pprint(record)
 
     template = "1117_template.pdf"
-    file_name = f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    file_name = f"C:/Users/UMCR/OneDrive - North American University/S.A/FA Pdfs/Spring 2024/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
     
     # file_name = f"pdf_outputs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
 
@@ -190,7 +190,7 @@ def createOfferLetter(record):
                             "address_city_zip":shippping_info["city_zip"],
             
                             "student_name1": shippping_info["student_name"]+",",
-                        "phrase_acceptance": "Congratulation on your acceptance at North American University for the Fall Semester 2023"}
+                        "phrase_acceptance": "Congratulation on your acceptance at North American University for the Spring Semester 2024"}
     )
 
 
@@ -215,7 +215,7 @@ def createOfferLetter(record):
     )
 
     # final_output_file = f"pdf_outputs/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
-    final_output_file =f"C:/Users/umcr/OneDrive - North American University (1)/S.A/FA Pdfs/Fall 2023//Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    final_output_file =f"C:/Users/UMCR/OneDrive - North American University/S.A/FA Pdfs/Spring 2024/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
 
 
     with open(final_output_file, "wb") as output_stream:
