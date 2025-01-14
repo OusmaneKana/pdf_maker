@@ -67,7 +67,7 @@ def create_pdf(record):
     # pprint(record)
 
     template = "1117_template.pdf"
-    file_name = f"C:/Users/UMCR/OneDrive - North American University/S.A/FA Pdfs/Spring 2024/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    file_name = f"C:/Users/UMCR/OneDrive - North American University/S.A/FA Pdfs/Fall 2024/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
     
     # file_name = f"pdf_outputs/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
 
@@ -173,10 +173,10 @@ def createOfferLetter(record):
 
 
     direct_cost_dct= {
-            "tuitionAndFee": 6443,
-            "housingFee": 1800,
-            "mealPlanFee": 1440,
-            "athleticsFee": 900}
+            "tuitionAndFee": 7718,
+            "housingFee": 0,
+            "mealPlanFee": 0,
+            "athleticsFee": 0}
 
     total_direct_cost = int(sum([val for key,val in direct_cost_dct.items()]))
     total_aid = int(sum([val for key,val in financial_aid.items()]))
@@ -190,16 +190,16 @@ def createOfferLetter(record):
                             "address_city_zip":shippping_info["city_zip"],
             
                             "student_name1": shippping_info["student_name"]+",",
-                        "phrase_acceptance": "Congratulation on your acceptance at North American University for the Spring Semester 2024"}
+                        "phrase_acceptance": "Congratulation on your acceptance at North American University for the Fall Semester 2024! "}
     )
 
 
     writer.update_page_form_field_values(
         writer.pages[1], {
             "tuitionAndFee": "$"+str(direct_cost_dct["tuitionAndFee"]),
-            "housingFee": "$"+str(direct_cost_dct["housingFee"]),
-            "mealPlanFee": "$"+str(direct_cost_dct["mealPlanFee"]),
-            "athleticsFee": "$"+str(direct_cost_dct["athleticsFee"]),
+            "housingFee": "$ -",
+            "mealPlanFee": "$ -",
+            "athleticsFee": "$ -",
             "totalDirectCost": "$"+str(total_direct_cost),
 
             
@@ -215,12 +215,13 @@ def createOfferLetter(record):
     )
 
     # final_output_file = f"pdf_outputs/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
-    final_output_file =f"C:/Users/UMCR/OneDrive - North American University/S.A/FA Pdfs/Spring 2024/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
+    final_output_file =f"C:/Users/UMCR/OneDrive - North American University/S.A/FA Pdfs/Fall 2024/Offer Letters/{record['first_name'].strip()} {record['last_name'].strip()}.pdf"
 
 
     with open(final_output_file, "wb") as output_stream:
         writer.write(output_stream)
     
+    print(f"Output filename {final_output_file}")
    
 
 

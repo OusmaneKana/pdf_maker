@@ -1,12 +1,10 @@
-
-import pymysql.cursors
 import pymssql
 import pandas
 from pprint import pprint
 from dotenv import dotenv_values
 import json
 
-CONFIG = dotenv_values(b".env")
+CONFIG = dotenv_values(b"C:\Users\UMCR\Desktop\projects_repo\pdf_maker\.env")
 
 
 def get_records():
@@ -26,7 +24,7 @@ def get_records():
                 inner join  [JZNAT-SQL1].[J1PRD].[dbo].[NAME_AND_ADDRESS] nms on nms.ID_NUM = bm.ID_NUM
                 inner join [JZNAT-SQL1].[J1FALIVE].[ngp].verify_isir ni on ni.constituent_id = p.id
                 inner join [JZNAT-SQL1].[J1FALIVE].[ngp].isir_ver_status_type nt on nt.id = ni.isir_ver_status_type_id
-                where ap.award_year_id = 10 and ni.award_year_type_id >= 10
+                where ap.award_year_id = 11 and ni.award_year_type_id >= 11
                 order by ap.created_on asc
                 """)
 
@@ -99,10 +97,42 @@ def get_records():
     return id_grand
 
 
+
+def get_meal_plan_records():
+    
+    conn = pymssql.connect(server='JZNAT-SQL1', user='NA\JAPI', password='AmirBjapi@23', database='J1PRD')
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+
+                    select nm.ID_NUM,nm.LAST_NAME, nm.FIRST_NAME, sc.MEAL_PLAN
+                    from STUD_LIFE_CHGS sc
+                    inner join NAME_AND_ADDRESS nm on nm.ID_NUM = sc.ID_NUM
+                    where sc.TRM_CDE = 'FA' and sc.YR_CDE = 2024 
+
+                """)
+    
+    record = cursor.fetchall()
+
+    df = pandas.DataFrame(record)
+
+    df.rename(columns={0:"student_id",1:"last_name",2:"first_name",3:"meal_plan_type" }, inplace=True)
+
+    meal_plan_records = df.to_dict(orient='records')
+
+
+  
+    return meal_plan_records
+
+
+
+
+
 if __name__ == "__main__":
     
-    records = get_records()
+    records = get_meal_plan_records()
 
-    print(len(records))
+    print(records[0])
 
 
