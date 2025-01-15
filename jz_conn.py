@@ -109,7 +109,7 @@ def get_meal_plan_records():
                     select nm.ID_NUM,nm.LAST_NAME, nm.FIRST_NAME, sc.MEAL_PLAN
                     from STUD_LIFE_CHGS sc
                     inner join NAME_AND_ADDRESS nm on nm.ID_NUM = sc.ID_NUM
-                    where sc.TRM_CDE = 'FA' and sc.YR_CDE = 2024 
+                    where sc.TRM_CDE = 'SP' and sc.YR_CDE = 2024 
 
                 """)
     
